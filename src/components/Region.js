@@ -11,7 +11,7 @@ const Region = ({ regions }) => {
       const response = await axios.get(
         "https://restcountries.eu/rest/v2/region/" + item
       );
-      //console.log(response.data);
+      console.log(response.data);
       setCountries(response.data);
     };
     search();
