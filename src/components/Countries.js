@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import "./Countries.css";
-import InfoCountries from "./InfoCountries";
 
 const Countries = ({ countries }) => {
   const [currentCountry, setCurrentCountry] = useState("");
