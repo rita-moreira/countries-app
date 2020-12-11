@@ -1,18 +1,33 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
-const Countries = ({ countries }) => {
+const Countries = ({ region }) => {
+  const [countries, setCountries] = useState([]);
   const [currentCountry, setCurrentCountry] = useState("");
-  const renderCountries = countries.map((item) => {
-    const onClickShowInf = (item) => {
-      //console.log(item.name);
-      setCurrentCountry(item.name);
-    };
 
+  //run at the beginning and everytime region changes
+  useEffect(() => {
+    const search = async () => {
+      const response = await axios.get(
+        "https://restcountries.eu/rest/v2/region/" + region
+      );
+      //console.log(response.data);
+      setCountries(response.data);
+      //para que ao mudar de regiao o país deixe de estar selecionado, senão guarda
+      setCurrentCountry("");
+    };
+    search();
+  }, [region]);
+
+  const renderCountries = countries.map((item) => {
     return (
       <div key={item.name} className="item">
         <img className=" ui avatar image" src={item.flag} alt={item.name} />
         <div className="content">
-          <button onClick={() => onClickShowInf(item)} className="header">
+          <button
+            onClick={() => setCurrentCountry(item.name)}
+            className="header"
+          >
             {item.name}
           </button>
           {currentCountry === item.name ? (
